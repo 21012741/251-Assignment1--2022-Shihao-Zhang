@@ -42,7 +42,7 @@ public class Notepad extends JFrame {
         super("Notepad-Rainplus");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(800, 800);
         getContentPane().add(content = new JPanel());
         /* 在内容面板中添加:菜单和文本编辑区 */
         content.setLayout(new BorderLayout(2, 2));
