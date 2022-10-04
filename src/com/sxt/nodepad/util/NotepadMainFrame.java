@@ -14,11 +14,13 @@ import java.io.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static javafx.application.Platform.exit;
+
 
 public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /**
-     * 序列号
+     * num
      */
     private static final long serialVersionUID = 8585210209467333480L;
     private JPanel contentPane;
@@ -26,33 +28,33 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     private JMenuItem itemOpen;
     private JMenuItem itemSave;
 
-    //1：新建
-    //2：修改过
-    //3：保存过的
+    //1：new
+    //2：A modified
+    //3：saved
     int flag=0;
 
-    //当前文件名
+    //filename
     String currentFileName=null;
 
-    PrintJob p=null;//声明一个要打印的对象
-    Graphics  g=null;//要打印的对象
+    PrintJob p=null;
+    Graphics  g=null;
 
-    //当前文件路径
+
     String currentPath=null;
 
-    //背景颜色
+
     JColorChooser jcc1=null;
     Color color=Color.BLACK;
 
-    //文本的行数和列数
+
     int linenum = 1;
     int columnnum = 1;
 
-    //撤销管理器
+
     public UndoManager undoMgr = new UndoManager();
 
-    //剪贴板
-    public Clipboard clipboard = new Clipboard("系统剪切板");
+
+    public Clipboard clipboard = new Clipboard("System shear plate");
 
     private JMenuItem itemSaveAs;
     private JMenuItem itemNew;
@@ -184,7 +186,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         separator = new JSeparator();
         itemFile.add(separator);
 
-        itemPage = new JMenuItem("页面设置(U)",'U');
+        itemPage = new JMenuItem("Page setup(U)",'U');
         itemPage.addActionListener(this);
         itemFile.add(itemPage);
 
@@ -292,35 +294,35 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         itemNextLine.addActionListener(this);
         itFormat.add(itemNextLine);
 
-        itemFont = new JMenuItem("字体大小(F)...");
+        itemFont = new JMenuItem("Font size(F)...");
         itemFont.addActionListener(this);
         itFormat.add(itemFont);
 
-        itemColor = new JMenuItem("背景颜色(C)...");
+        itemColor = new JMenuItem("Background Color(C)...");
         itemColor.addActionListener(this);
         itFormat.add(itemColor);
 
-        itemFontColor = new JMenuItem("字体颜色(I)...");
+        itemFontColor = new JMenuItem("Font Color(FC)...");
         itemFontColor.addActionListener(this);
         itFormat.add(itemFontColor);
 
-        itemCheck = new JMenu("查看(V)");
+        itemCheck = new JMenu("View(V)");
         itemCheck.setMnemonic('V');
         menuBar.add(itemCheck);
 
-        itemStatement = new JCheckBoxMenuItem("状态栏(S)");
+        itemStatement = new JCheckBoxMenuItem("Status(S)");
         itemStatement.addActionListener(this);
         itemCheck.add(itemStatement);
 
-        itemHelp = new JMenu("帮助(H)");
+        itemHelp = new JMenu("Help(H)");
         itemHelp.setMnemonic('H');
         menuBar.add(itemHelp);
 
-        itemSearchForHelp = new JMenuItem("查看帮助(H)",'H');
+        itemSearchForHelp = new JMenuItem("Help(H)",'H');
         itemSearchForHelp.addActionListener(this);
         itemHelp.add(itemSearchForHelp);
 
-        itemAboutNotepad = new JMenuItem("关于记事本(A)",'A');
+        itemAboutNotepad = new JMenuItem("About(A)",'A');
         itemAboutNotepad.addActionListener(this);
         itemHelp.add(itemAboutNotepad);
         contentPane = new JPanel();
@@ -331,7 +333,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
         textArea = new JTextArea();
 
-        //VERTICAL垂直    HORIZONTAL水平
+        //VERTICAL   HORIZONTAL
         scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         //contentPane2=new JPanel();
@@ -343,66 +345,66 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         popupMenu = new JPopupMenu();
         addPopup(textArea, popupMenu);
 
-        popM_Undo = new JMenuItem("撤销(U)");
+        popM_Undo = new JMenuItem("Undo(U)");//撤销
         popM_Undo.addActionListener(this);
         popupMenu.add(popM_Undo);
 
-        popM_Redo = new JMenuItem("恢复(R)");
+        popM_Redo = new JMenuItem("Recover(R)");
         popM_Redo.addActionListener(this);
         popupMenu.add(popM_Redo);
 
         separator_2 = new JSeparator();
         popupMenu.add(separator_2);
 
-        popM_Cut = new JMenuItem("剪切(T)");
+        popM_Cut = new JMenuItem("Cut(T)");
         popM_Cut.addActionListener(this);
         popupMenu.add(popM_Cut);
 
-        popM_Copy = new JMenuItem("复制(C)");
+        popM_Copy = new JMenuItem("Copy(C)");
         popM_Copy.addActionListener(this);
         popupMenu.add(popM_Copy);
 
-        popM_Paste = new JMenuItem("粘贴(P)");
+        popM_Paste = new JMenuItem("Paste(P)");
         popM_Paste.addActionListener(this);
         popupMenu.add(popM_Paste);
 
-        popM_Delete = new JMenuItem("删除(D)");
+        popM_Delete = new JMenuItem("Delete(D)");
         popM_Delete.addActionListener(this);
         popupMenu.add(popM_Delete);
 
         separator_3 = new JSeparator();
         popupMenu.add(separator_3);
 
-        popM_SelectAll = new JMenuItem("全选(A)");
+        popM_SelectAll = new JMenuItem("Select All(A)");
         popM_SelectAll.addActionListener(this);
         popupMenu.add(popM_SelectAll);
 
         separator_4 = new JSeparator();
         popupMenu.add(separator_4);
 
-        popM_toLeft = new JMenuItem("从右到左的阅读顺序(R)");
+        popM_toLeft = new JMenuItem("Reading order from right to left(R)");
         popM_toLeft.addActionListener(this);
         popupMenu.add(popM_toLeft);
 
-        popM_showUnicode = new JMenuItem("显示Unicode控制字符(S)");
+        popM_showUnicode = new JMenuItem("Displays Unicode control characters(S)");
         popM_showUnicode.addActionListener(this);
         popupMenu.add(popM_showUnicode);
 
-        popM_InsertUnicode = new JMenuItem("插入Unicode控制字符(I)");
+        popM_InsertUnicode = new JMenuItem("Insert Unicode control characters(I)");
         popM_InsertUnicode.addActionListener(this);
         popupMenu.add(popM_InsertUnicode);
 
         separator_5 = new JSeparator();
         popupMenu.add(separator_5);
 
-        popM_closeIMe = new JMenuItem("关闭IME(L)");
+        popM_closeIMe = new JMenuItem("Shut down IME(L)");
         popM_closeIMe.addActionListener(this);
         popupMenu.add(popM_closeIMe);
 
-        popM_RestartSelect = new JMenuItem("汉字重选(R)");
+        popM_RestartSelect = new JMenuItem("Re-election(R)");
         popM_RestartSelect.addActionListener(this);
         popupMenu.add(popM_RestartSelect);
-        //添加到面板中【中间】
+        //添加到面板中
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
         //添加撤销管理器
@@ -411,14 +413,14 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
         toolState = new JToolBar();
         toolState.setSize(textArea.getSize().width, 10);//toolState.setLayout(new FlowLayout(FlowLayout.LEFT));
-        label1 = new JLabel("    当前系统时间：" + hour + ":" + min + ":" + second+" ");
+        label1 = new JLabel("Current system time:" + hour + ":" + min + ":" + second+" ");
         toolState.add(label1);
         toolState.addSeparator();
-        label2 = new JLabel("    第 " + linenum + " 行, 第 " + columnnum+" 列  ");
+        label2 = new JLabel(" The " + linenum + " line, The " + columnnum+" column  ");
         toolState.add(label2);
         toolState.addSeparator();
 
-        label3 = new JLabel("    一共 " +length+" 字  ");
+        label3 = new JLabel(" A total of " +length+" words  ");
         toolState.add(label3);
         textArea.addCaretListener(new CaretListener() {        //记录行数和列数
             public void caretUpdate(CaretEvent e) {
@@ -430,11 +432,11 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                     linenum = editArea.getLineOfOffset(caretpos);
                     columnnum = caretpos - textArea.getLineStartOffset(linenum);
                     linenum += 1;
-                    label2.setText("    第 " + linenum + " 行, 第 " + (columnnum+1)+" 列  ");
+                    label2.setText(" The " + linenum + " Line, The " + (columnnum+1)+" column  ");
                     //sum+=columnnum+1;
                     //length+=sum;
                     length=NotepadMainFrame.this.textArea.getText().toString().length();
-                    label3.setText("    一共 " +length+" 字  ");
+                    label3.setText(" A total of " +length+" words ");
                 }
                 catch(Exception ex) { }
             }});
@@ -447,14 +449,14 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
 
 
-        // 创建弹出菜单
-        final JPopupMenu jp=new JPopupMenu();    //创建弹出式菜单，下面三项是菜单项
+
+        final JPopupMenu jp=new JPopupMenu();    //
         textArea.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(e.getButton()==MouseEvent.BUTTON3)//只响应鼠标右键单击事件
+                if(e.getButton()==MouseEvent.BUTTON3)//
                 {
-                    jp.show(e.getComponent(),e.getX(),e.getY());//在鼠标位置显示弹出式菜单
+                    jp.show(e.getComponent(),e.getX(),e.getY());//
                 }
             }
         });
@@ -466,14 +468,12 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
 
     /*===============================1====================================*/
-    /**
-     * 是否有变化
-     */
+
     private void isChanged() {
         textArea.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                //在这里我进行了对使用快捷键，但是没有输入字符却没有改变textArea中内容的判断
+                //Here I make a judgment about using a shortcut key but not entering a character without changing the content of the textArea
                 Character c=e.getKeyChar();
                 if(c != null && !textArea.getText().toString().equals("")){
                     flag=2;
@@ -486,16 +486,16 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /*===============================2====================================*/
     /**
-     * 新建的或保存过的退出只有两个选择
+     *A new or saved exit has only two options
      */
     private void MainFrameWidowListener() {
         this.addWindowListener(new WindowAdapter(){
             @Override
             public void windowClosing(WindowEvent e) {
                 if(flag==2 && currentPath==null){
-                    //这是弹出小窗口
-                    //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到无标题?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    //This is the little popup window
+                    //(The notepad is 0 when you just start, and the newly created document is 1) after modification
+                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether to save the changes to Text Editor?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                     if(result==JOptionPane.OK_OPTION){
                         NotepadMainFrame.this.saveAs();
                     }else if(result==JOptionPane.NO_OPTION){
@@ -503,9 +503,9 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                         NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
                     }
                 }else if(flag==2 && currentPath!=null){
-                    //这是弹出小窗口
-                    //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到"+currentPath+"?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    //This is the little popup window
+                    //(The notepad is 0 when you just start, and the newly created document is 1) after modification
+                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether to save the changes to " + currentPath + "?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                     if(result==JOptionPane.OK_OPTION){
                         NotepadMainFrame.this.save();
                     }else if(result==JOptionPane.NO_OPTION){
@@ -513,8 +513,8 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                         NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
                     }
                 }else{
-                    //这是弹出小窗口
-                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "确定关闭？", "系统提示", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    //
+                    int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Determine to closed？", "The system prompt", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
                     if(result==JOptionPane.OK_OPTION){
                         NotepadMainFrame.this.dispose();
                         NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -528,82 +528,78 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /*==============================3=====================================*/
     /**
-     * 行为动作
+     *
      */
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==itemOpen){            //打开
+        if(e.getSource()==itemOpen){            //open
             openFile();
-        }else if(e.getSource()==itemSave){        //保存
-            //如果该文件是打开的，就可以直接保存
+        }else if(e.getSource()==itemSave){        //save
             save();
-        }else if(e.getSource()==itemSaveAs){    //另存为
+        }else if(e.getSource()==itemSaveAs){    //save as
             saveAs();
-        }else if(e.getSource()==itemNew){        //新建
+        }else if(e.getSource()==itemNew){        //new
             newFile();
-        }else if(e.getSource()==itemExit){        //退出
+        }else if(e.getSource()==itemExit){        //exit
             exit();
-        }else if(e.getSource()==itemPage){        //页面设置
-            ///页面设置，百度到的，不知道具体的用法
+        }else if(e.getSource()==itemPage){        //page set up
             PageFormat pf = new PageFormat();
             PrinterJob.getPrinterJob().pageDialog(pf);
-        }else if(e.getSource()==itemPrint){        //打印
-            //打印机
+        }else if(e.getSource()==itemPrint){        //print
             Print();
-        }else if(e.getSource()==itemUndo || e.getSource()==popM_Undo){        //撤销
+        }else if(e.getSource()==itemUndo || e.getSource()==popM_Undo){        //Undo
             if(undoMgr.canUndo()){
                 undoMgr.undo();
             }
-        }else if(e.getSource()==itemRedo || e.getSource()==popM_Redo){        //恢复
+        }else if(e.getSource()==itemRedo || e.getSource()==popM_Redo){        //Redo
             if(undoMgr.canRedo()){
                 undoMgr.redo();
             }
-        }else if(e.getSource()==itemCut || e.getSource()==popM_Cut){        //剪切
+        }else if(e.getSource()==itemCut || e.getSource()==popM_Cut){        //cut
             cut();
-        }else if(e.getSource()==itemCopy || e.getSource()==popM_Copy){        //复制
+        }else if(e.getSource()==itemCopy || e.getSource()==popM_Copy){        //copy
             copy();
-        }else if(e.getSource()==itemPaste || e.getSource()==popM_Paste){    //粘贴
+        }else if(e.getSource()==itemPaste || e.getSource()==popM_Paste){    //paste
             paste();
-        }else if(e.getSource()==itemDelete || e.getSource()==popM_Delete){    //删除
+        }else if(e.getSource()==itemDelete || e.getSource()==popM_Delete){    //delete
             String tem=textArea.getText().toString();
             textArea.setText(tem.substring(0,textArea.getSelectionStart()));
-        }else if(e.getSource()==itemFind){        //查找
+        }else if(e.getSource()==itemFind){        //find
             mySearch();
-        }else if(e.getSource()==itemFindNext){    //查找下一个
+        }else if(e.getSource()==itemFindNext){    //find next
             mySearch();
-        }else if(e.getSource()==itemReplace){    //替换
+        }else if(e.getSource()==itemReplace){    //replace
             mySearch();
-        }else if(e.getSource()==itemTurnTo){    //转到
+        }else if(e.getSource()==itemTurnTo){    //turn to
             turnTo();
-        }else if(e.getSource()==itemSelectAll || e.getSource()==popM_SelectAll){    //选择全部
+        }else if(e.getSource()==itemSelectAll || e.getSource()==popM_SelectAll){    //Select all
             textArea.selectAll();
-        }else if(e.getSource()==itemTime){        //时间/日期
+        }else if(e.getSource()==itemTime){        //Time/date
             textArea.append(hour+":"+min+" "+c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH));
-        }else if(e.getSource()==itemNextLine){    //设置自动换行
-            //设置文本区的换行策略。如果设置为 true，则当行的长度大于所分配的宽度时，将换行。此属性默认为 false。
+        }else if(e.getSource()==itemNextLine){    //next line
+            //Sets the newline policy for the text area. If set to true, a line will be wrapped when the length of the line is greater than the allocated width. This property defaults to false.
             if(itemNextLine.isSelected()){
                 textArea.setLineWrap(true);
             }else{
                 textArea.setLineWrap(false);
             }
-        }else if(e.getSource()==itemFont){        //设置字体大小
-            // 构造字体选择器，参数字体为预设值
+        }else if(e.getSource()==itemFont){        //font size
             MQFontChooser fontChooser = new MQFontChooser(textArea.getFont());
             fontChooser.showFontDialog(this);
             Font font = fontChooser.getSelectFont();
-            // 将字体设置到JTextArea中
+            //JTextArea
             textArea.setFont(font);
-        }else if(e.getSource()==itemColor){        //设置背景颜色
+        }else if(e.getSource()==itemColor){        //background color
             jcc1 = new JColorChooser();
-            JOptionPane.showMessageDialog(this, jcc1,"选择背景颜色颜色",-1);
+            JOptionPane.showMessageDialog(this, jcc1,"Select the background color color",-1);
             color = jcc1.getColor();
             textArea.setBackground(color);
-        }else if(e.getSource()==itemFontColor){    //设置字体颜色
+        }else if(e.getSource()==itemFontColor){    //font color
             jcc1=new JColorChooser();
-            JOptionPane.showMessageDialog(this, jcc1, "选择字体颜色", -1);
+            JOptionPane.showMessageDialog(this, jcc1, "Select the font color", -1);
             color = jcc1.getColor();
             //String string=textArea.getSelectedText();
             textArea.setForeground(color);
-        }else if(e.getSource()==itemStatement){    //设置状态
+        }else if(e.getSource()==itemStatement){    //set status
             if(itemStatement.isSelected()){
                 //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
                 toolState.setVisible(true);
@@ -611,23 +607,19 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                 //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 toolState.setVisible(false);
             }
-        }else if(e.getSource()==itemSearchForHelp){
-            JOptionPane.showMessageDialog(this, "赶快迷恋哥，趁哥还不是传说…","行动起来",1);
-        }else if(e.getSource()==itemAboutNotepad){
-            JOptionPane.showMessageDialog(this, "记事本V1.0【1603班zenglish制作】","软件说明 ",1);
         }
     }
     /*===================================================================*/
 
 
     private void turnTo() {
-        final JDialog gotoDialog = new JDialog(this, "转到下列行");
-        JLabel gotoLabel = new JLabel("行数(L):");
+        final JDialog gotoDialog = new JDialog(this, "turn to next line");
+        JLabel gotoLabel = new JLabel("Line_num(L):");
         final JTextField linenum = new JTextField(5);
         linenum.setText("1");
         linenum.selectAll();
 
-        JButton okButton = new JButton("确定");
+        JButton okButton = new JButton("Sure");
         okButton.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -638,7 +630,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
                 while (true) {
                     pos = s.indexOf('\12', pos);
-                    // System.out.println("引索pos:"+pos);
+                    // System.out.println("pos:"+pos);
                     if (pos == -1)
                         break;
                     lineNumber[t++] = pos++;
@@ -648,7 +640,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                 try {
                     gt = Integer.parseInt(linenum.getText());
                 } catch (NumberFormatException efe) {
-                    JOptionPane.showMessageDialog(null, "请输入行数!", "提示", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Please put line-num!", "tips", JOptionPane.WARNING_MESSAGE);
                     linenum.requestFocus(true);
                     return;
                 }
@@ -666,7 +658,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
         });
 
-        JButton cancelButton = new JButton("取消");
+        JButton cancelButton = new JButton("cancel");
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 gotoDialog.dispose();
@@ -687,75 +679,40 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     }
 
 
-    /*===============================8====================================*/
-    /**
-     * 推出按钮，和窗口的红叉实现一样的功能
-     */
-    private void exit() {
-        if(flag==2 && currentPath==null){
-            //这是弹出小窗口
-            //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到无标题?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if(result==JOptionPane.OK_OPTION){
-                NotepadMainFrame.this.saveAs();
-            }else if(result==JOptionPane.NO_OPTION){
-                NotepadMainFrame.this.dispose();
-                NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            }
-        }else if(flag==2 && currentPath!=null){
-            //这是弹出小窗口
-            //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到"+currentPath+"?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if(result==JOptionPane.OK_OPTION){
-                NotepadMainFrame.this.save();
-            }else if(result==JOptionPane.NO_OPTION){
-                NotepadMainFrame.this.dispose();
-                NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            }
-        }else{
-            //这是弹出小窗口
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "确定关闭？", "系统提示", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
-            if(result==JOptionPane.OK_OPTION){
-                NotepadMainFrame.this.dispose();
-                NotepadMainFrame.this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-            }
-        }
-    }
-    /*===================================================================*/
-
 
     /*===============================4====================================*/
     /**
-     * 新建文件，只有改过的和保存过的需要处理
+     * new file
      */
     private void newFile() {
-        if(flag==0 || flag==1){        //刚启动记事本为0，刚新建文档为1
+        if(flag==0 || flag==1){        //When you start Notepad, it's 0. When you create a new document, it's 1
             return;
-        }else if(flag==2 && this.currentPath==null){        //修改后
-            //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到无标题?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        }else if(flag==2 && this.currentPath==null){        //changed
+            //1、When you start Notepad, it's 0. When you create a new document, it's 1
+            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether to save changes to untitled\n" +
+                    "\n?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(result==JOptionPane.OK_OPTION){
-                this.saveAs();        //另存为
+                this.saveAs();        //save as
             }else if(result==JOptionPane.NO_OPTION){
                 this.textArea.setText("");
-                this.setTitle("无标题");
+                this.setTitle("Text Editor");
                 flag=1;
             }
             return;
         }else if(flag==2 && this.currentPath!=null ){
-            //2、（保存的文件为3）条件下修改后
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到"+this.currentPath+"?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            //2、
+            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether to save the changes to"+this.currentPath+"?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(result==JOptionPane.OK_OPTION){
-                this.save();        //直接保存，有路径
+                this.save();        //save straight
             }else if(result==JOptionPane.NO_OPTION){
                 this.textArea.setText("");
-                this.setTitle("无标题");
+                this.setTitle("Text Editor");
                 flag=1;
             }
-        }else if(flag==3){        //保存的文件
+        }else if(flag==3){        //file saved
             this.textArea.setText("");
             flag=1;
-            this.setTitle("无标题");
+            this.setTitle("Text Editor");
         }
     }
     /*===================================================================*/
@@ -763,24 +720,24 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /*===============================5====================================*/
     /**
-     * 另存为
+     * save as
      */
     private void saveAs() {
-        //打开保存框
+        //open save place
         JFileChooser choose=new JFileChooser();
-        //选择文件
+        //chose file
         int result=choose.showSaveDialog(this);
         if(result==JFileChooser.APPROVE_OPTION){
-            //取得选择的文件[文件名是自己输入的]
+            //Get the selected file [the name of the file is your own input]
             File file=choose.getSelectedFile();
             FileWriter fw=null;
-            //保存
+            //save
             try {
                 fw=new FileWriter(file);
                 fw.write(textArea.getText());
                 currentFileName=file.getName();
                 currentPath=file.getAbsolutePath();
-                //如果比较少，需要写
+                //If it's less, you need to write
                 fw.flush();
                 this.flag=3;
                 this.setTitle(currentPath);
@@ -800,7 +757,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /*===============================6====================================*/
     /**
-     * 保存
+     * save
      */
     private void save() {
         if(this.currentPath==null){
@@ -810,11 +767,10 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
             }
         }
         FileWriter fw=null;
-        //保存
+        //save
         try {
             fw=new FileWriter(new  File(currentPath));
             fw.write(textArea.getText());
-            //如果比较少，需要写
             fw.flush();
             flag=3;
             this.setTitle(this.currentPath);
@@ -833,47 +789,40 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     /*================================7===================================*/
     /**
-     * 打开文件
+     * save
      */
     private void openFile() {
         if(flag==2 && this.currentPath==null){
-            //1、（刚启动记事本为0，刚新建文档为1）条件下修改后
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到无标题?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            //1,When you start Notepad, it's 0. When you create a new document, it's 1
+            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether save to Text Editor?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(result==JOptionPane.OK_OPTION){
                 this.saveAs();
             }
         }else if(flag==2 && this.currentPath!=null){
-            //2、（打开的文件2，保存的文件3）条件下修改
-            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "是否将更改保存到"+this.currentPath+"?", "记事本", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            //2、open 2 save 3
+            int result=JOptionPane.showConfirmDialog(NotepadMainFrame.this, "Whether save to"+this.currentPath+"?", "Notepad", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
             if(result==JOptionPane.OK_OPTION){
                 this.save();
             }
         }
-        //打开文件选择框
         JFileChooser choose=new JFileChooser();
-        //选择文件
+        //choose file
         int result=choose.showOpenDialog(this);
         if(result==JFileChooser.APPROVE_OPTION){
-            //取得选择的文件
             File file=choose.getSelectedFile();
-            //打开已存在的文件，提前将文件名存起来
             currentFileName=file.getName();
-            //存在文件全路径
             currentPath=file.getAbsolutePath();
             flag=3;
             this.setTitle(this.currentPath);
             BufferedReader br=null;
             try {
-                //建立文件流[字符流]
                 InputStreamReader isr=new InputStreamReader(new FileInputStream(file),"GBK");
-                br=new BufferedReader(isr);//动态绑定
-                //读取内容
+                br=new BufferedReader(isr);
                 StringBuffer sb=new StringBuffer();
                 String line=null;
                 while((line=br.readLine())!=null){
                     sb.append(line+SystemParam.LINE_SEPARATOR);
                 }
-                //显示在文本框[多框]
                 textArea.setText(sb.toString());
             } catch (FileNotFoundException e1) {
                 e1.printStackTrace();
@@ -895,11 +844,11 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     public void Print()
     {
         try{
-            p = getToolkit().getPrintJob(this,"ok",null);//创建一个Printfjob 对象 p
-            g = p.getGraphics();//p 获取一个用于打印的 Graphics 的对象
-            //g.translate(120,200);//改变组建的位置
+            p = getToolkit().getPrintJob(this,"ok",null);//new a Printfjob  p
+            g = p.getGraphics();//print
+            //g.translate(120,200);//change the position
             this.textArea.printAll(g);
-            p.end();//释放对象 g
+            p.end();//release g
         }
         catch(Exception a){
 
@@ -928,46 +877,37 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
     public void cut(){
         copy();
-        //标记开始位置
+        //
         int start = this.textArea.getSelectionStart();
-        //标记结束位置
+        //
         int end = this.textArea.getSelectionEnd();
-        //删除所选段
+        //
         this.textArea.replaceRange("", start, end);
 
     }
 
     public void copy(){
-        //拖动选取文本
         String temp = this.textArea.getSelectedText();
-        //把获取的内容复制到连续字符器，这个类继承了剪贴板接口
         StringSelection text = new StringSelection(temp);
-        //把内容放在剪贴板
         this.clipboard.setContents(text, null);
     }
 
     public void paste(){
-        //Transferable接口，把剪贴板的内容转换成数据
         Transferable contents = this.clipboard.getContents(this);
-        //DataFalvor类判断是否能把剪贴板的内容转换成所需数据类型
+        //DataFalvor
         DataFlavor flavor = DataFlavor.stringFlavor;
-        //如果可以转换
+        //if it can translate
         if(contents.isDataFlavorSupported(flavor)){
             String str;
-            try {//开始转换
+            try {//translate
                 str=(String)contents.getTransferData(flavor);
-                //如果要粘贴时，鼠标已经选中了一些字符
+                //if paste
                 if(this.textArea.getSelectedText()!=null){
-                    //定位被选中字符的开始位置
                     int start = this.textArea.getSelectionStart();
-                    //定位被选中字符的末尾位置
                     int end = this.textArea.getSelectionEnd();
-                    //把粘贴的内容替换成被选中的内容
                     this.textArea.replaceRange(str, start, end);
                 }else{
-                    //获取鼠标所在TextArea的位置
                     int mouse = this.textArea.getCaretPosition();
-                    //在鼠标所在的位置粘贴内容
                     this.textArea.insert(str, mouse);
                 }
             } catch(UnsupportedFlavorException e) {
@@ -981,27 +921,27 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     }
 
     public void mySearch() {
-        final JDialog findDialog = new JDialog(this, "查找与替换", true);
+        final JDialog findDialog = new JDialog(this, "Find and replace", true);
         Container con = findDialog.getContentPane();
         con.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel searchContentLabel = new JLabel("查找内容(N) :");
-        JLabel replaceContentLabel = new JLabel("替换为(P)　 :");
+        JLabel searchContentLabel = new JLabel("Find content(N) :");
+        JLabel replaceContentLabel = new JLabel("Place(P)　 :");
         final JTextField findText = new JTextField(22);
         final JTextField replaceText = new JTextField(22);
-        final JCheckBox matchcase = new JCheckBox("区分大小写");
+        final JCheckBox matchcase = new JCheckBox("Case sensitive");
         ButtonGroup bGroup = new ButtonGroup();
-        final JRadioButton up = new JRadioButton("向上(U)");
-        final JRadioButton down = new JRadioButton("向下(D)");
+        final JRadioButton up = new JRadioButton("Up(U)");
+        final JRadioButton down = new JRadioButton("Down(D)");
         down.setSelected(true);
         bGroup.add(up);
         bGroup.add(down);
-        JButton searchNext = new JButton("查找下一个(F)");
-        JButton replace = new JButton("替换(R)");
-        final JButton replaceAll = new JButton("全部替换(A)");
+        JButton searchNext = new JButton("Find next(F)");
+        JButton replace = new JButton("Replace(R)");
+        final JButton replaceAll = new JButton("Replace All(A)");
         searchNext.setPreferredSize(new Dimension(110, 22));
         replace.setPreferredSize(new Dimension(110, 22));
         replaceAll.setPreferredSize(new Dimension(110, 22));
-        // "替换"按钮的事件处理
+        //replace
         replace.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -1012,15 +952,15 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
             }
         });
 
-        // "替换全部"按钮的事件处理
+        //replace all
         replaceAll.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                textArea.setCaretPosition(0); // 将光标放到编辑区开头
+                textArea.setCaretPosition(0);
                 int a = 0, b = 0, replaceCount = 0;
 
                 if (findText.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(findDialog, "请填写查找内容!", "提示", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(findDialog, "Please fill in the search content!", "tips", JOptionPane.WARNING_MESSAGE);
                     findText.requestFocus(true);
                     return;
                 }
@@ -1068,9 +1008,9 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                         }
                     } else {
                         if (replaceCount == 0) {
-                            JOptionPane.showMessageDialog(findDialog, "找不到您查找的内容!", "记事本", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(findDialog, "Cant find!", "Notepad", JOptionPane.INFORMATION_MESSAGE);
                         } else {
-                            JOptionPane.showMessageDialog(findDialog, "成功替换" + replaceCount + "个匹配内容!", "替换成功", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(findDialog, "Successful replacement" + replaceCount + "num of match content!", "替换成功", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }
                     if (replaceText.getText().length() == 0 && textArea.getSelectedText() != null) {
@@ -1083,9 +1023,9 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                     }
                 }// end while
             }
-        }); /* "替换全部"按钮的事件处理结束 */
+        });
 
-        // "查找下一个"按钮事件处理
+        // find next
         searchNext.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -1096,7 +1036,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                 str2 = str1.toLowerCase();
                 str3 = findText.getText();
                 str4 = str3.toLowerCase();
-                // "区分大小写"的CheckBox被选中
+                // The "case-sensitive" CheckBox is selected
                 if (matchcase.isSelected()) {
                     strA = str1;
                     strB = str3;
@@ -1130,13 +1070,13 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                         textArea.select(a, a + b);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "找不到您查找的内容!", "记事本", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "can't find the content you find!", "Notepad", JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
-        });/* "查找下一个"按钮事件处理结束 */
-        // "取消"按钮及事件处理
-        JButton cancel = new JButton("取消");
+        });/* find next over */
+        // cancel
+        JButton cancel = new JButton("cancel");
         cancel.setPreferredSize(new Dimension(110, 22));
         cancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -1144,13 +1084,12 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
             }
         });
 
-        // 创建"查找与替换"对话框的界面
         JPanel bottomPanel = new JPanel();
         JPanel centerPanel = new JPanel();
         JPanel topPanel = new JPanel();
 
         JPanel direction = new JPanel();
-        direction.setBorder(BorderFactory.createTitledBorder("方向 "));
+        direction.setBorder(BorderFactory.createTitledBorder("direction "));
         direction.add(up);
         direction.add(down);
         direction.setPreferredSize(new Dimension(170, 60));
@@ -1173,7 +1112,6 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         con.add(centerPanel);
         con.add(bottomPanel);
 
-        // 设置"查找与替换"对话框的大小、可更改大小(否)、位置和可见性
         findDialog.setSize(410, 210);
         findDialog.setResizable(false);
         findDialog.setLocation(230, 280);

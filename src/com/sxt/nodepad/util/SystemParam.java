@@ -1,14 +1,14 @@
 package com.sxt.nodepad.util;
 
 /**
- * 系统参数
+ * System parameters
  * @author Taylor
  *
  */
 public class SystemParam {
 
     /**
-     * 当前系统换行符
+     * Current system newline character
      */
     public static final String LINE_SEPARATOR=System.getProperty("line.separator");
 }

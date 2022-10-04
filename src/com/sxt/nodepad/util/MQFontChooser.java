@@ -31,32 +31,32 @@ import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
 /**
- * 这是自己找的一份字体选择器的资料
+ * Font selector
  * @author Taylor
  *
  */
 public class MQFontChooser extends JDialog {
     /**
-     * 选择取消按钮的返回值
+     * Select the return value of the cancel button
      */
     public static final int CANCEL_OPTION = 0;
     /**
-     * 选择确定按钮的返回值
+     * Select the return value of the determine button
      */
     public static final int APPROVE_OPTION = 1;
     /**
-     * 中文预览的字符串
+     * Chinese preview character string
      */
     private static final String CHINA_STRING = "神马都是浮云！";
     /**
-     * 英文预览的字符串
+     * English preview character string
      */
     private static final String ENGLISH_STRING = "Hello Kitty！";
     /**
-     * 数字预览的字符串
+     * Number preview character string
      */
     private static final String NUMBER_STRING = "0123456789";
-    // 预设字体，也是将来要返回的字体
+    // The default font, which is the font to be returned in the future
     private Font font = null;
     // 字体选择器组件容器
     private Box box = null;
