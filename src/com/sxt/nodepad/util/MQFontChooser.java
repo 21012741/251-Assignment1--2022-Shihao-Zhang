@@ -42,7 +42,7 @@ public class MQFontChooser extends JDialog {
     /**
      * Chinese preview character string
      */
-    private static final String CHINA_STRING = "神马都是浮云！";
+    private static final String CHINA_STRING = "All are nothing!";
     /**
      * English preview character string
      */
@@ -53,75 +53,74 @@ public class MQFontChooser extends JDialog {
     private static final String NUMBER_STRING = "0123456789";
     // The default font, which is the font to be returned in the future
     private Font font = null;
-    // 字体选择器组件容器
+    // Font selector component container
     private Box box = null;
-    // 字体文本框
+    // font text box
     private JTextField fontText = null;
-    // 样式文本框
+    // style text box
     private JTextField styleText = null;
-    // 文字大小文本框
+    // text size text box
     private JTextField sizeText = null;
-    // 预览文本框
+    // preview text box
     private JTextField previewText = null;
-    // 中文预览
+    // Chinese preview
     private JRadioButton chinaButton = null;
-    // 英文预览
+    // English preview
     private JRadioButton englishButton = null;
-    // 数字预览
+    // number preview
     private JRadioButton numberButton = null;
-    // 字体选择框
+    // font selection box
     private JList fontList = null;
-    // 样式选择器
+    // style selection box
     private JList styleList = null;
-    // 文字大小选择器
+    // font size selection box
     private JList sizeList = null;
-    // 确定按钮
+    // Confirm button
     private JButton approveButton = null;
-    // 取消按钮
+    // Cancel button
     private JButton cancelButton = null;
-    // 所有字体
+    // All font
     private String [] fontArray = null;
-    // 所有样式
-    private String [] styleArray = {"常规", "粗体", "斜体", "粗斜体"};
-    // 所有预设字体大小
+    // All pattern
+    private String [] styleArray = {"regular", "bold", "italic", "bold italic"};
+    // All preset font sizes
     private String [] sizeArray = {"8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "初号", "小初", "一号", "小一", "二号", "小二", "三号", "小三", "四号", "小四", "五号", "小五", "六号", "小六", "七号", "八号"};
-    // 上面数组中对应的字体大小
+    // The corresponding font size in the above array
     private int [] sizeIntArray = {8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 42, 36, 26, 24, 22, 18, 16, 15, 14, 12, 10, 9, 8, 7, 6, 5};
-    // 返回的数值，默认取消
     private int returnValue = CANCEL_OPTION;
     /**
-     * 体构造一个字体选择器
+     * build a font chooser
      */
     public MQFontChooser() {
-        this(new Font("宋体", Font.PLAIN, 12));
+        this(new Font("font song", Font.PLAIN, 12));
     }
     /**
-     * 使用给定的预设字体构造一个字体选择器
-     * @param font 字体
+     * build a font
+     * @param font style
      */
     public MQFontChooser(Font font) {
-        setTitle("字体选择器");
+        setTitle("Font selector");
         this.font = font;
-        // 初始化UI组件
+        // Initialize UI components
         init();
-        // 添加监听器
+        // add listener
         addListener();
-        // 按照预设字体显示
+        // Display in default font
         setup();
-        // 基本设置
+        // basic set up
         setModal(true);
         setResizable(false);
-        // 自适应大小
+        // adaptive size
         pack();
     }
     /**
-     * 初始化组件
+     * Initialization module
      */
     private void init(){
-        // 获得系统字体
+        // get system font
         GraphicsEnvironment eq = GraphicsEnvironment.getLocalGraphicsEnvironment();
         fontArray = eq.getAvailableFontFamilyNames();
-        // 主容器
+        // main container
         box = Box.createVerticalBox();
         box.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         fontText = new JTextField();
