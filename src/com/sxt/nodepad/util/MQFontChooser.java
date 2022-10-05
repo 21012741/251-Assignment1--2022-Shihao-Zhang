@@ -30,11 +30,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-/**
- * Font selector
- * @author Taylor
- *
- */
 public class MQFontChooser extends JDialog {
     /**
      * Select the return value of the cancel button

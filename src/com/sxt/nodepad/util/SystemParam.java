@@ -1,10 +1,5 @@
 package com.sxt.nodepad.util;
 
-/**
- * System parameters
- * @author Taylor
- *
- */
 public class SystemParam {
 
     /**

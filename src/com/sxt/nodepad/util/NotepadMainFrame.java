@@ -281,10 +281,10 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         itemEdit.add(separator_8);
         itemEdit.add(itemSelectAll);
 
-        itemTime = new JMenuItem("Date(D)",'D');
-        itemTime.addActionListener(this);
-        itemTime.setAccelerator(KeyStroke.getKeyStroke("F5"));
-        itemEdit.add(itemTime);
+//        itemTime = new JMenuItem("Date(D)",'D');
+//        itemTime.addActionListener(this);
+//        itemTime.setAccelerator(KeyStroke.getKeyStroke("F5"));
+//        itemEdit.add(itemTime);
 
         itFormat = new JMenu("Format(O)");
         itFormat.setMnemonic('O');
@@ -404,10 +404,10 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         popM_RestartSelect = new JMenuItem("Re-election(R)");
         popM_RestartSelect.addActionListener(this);
         popupMenu.add(popM_RestartSelect);
-        //添加到面板中
+        //ADD to panel
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        //添加撤销管理器
+        //Add a Undo manager
         textArea.getDocument().addUndoableEditListener(undoMgr);
 
 
@@ -422,7 +422,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
         label3 = new JLabel(" A total of " +length+" words  ");
         toolState.add(label3);
-        textArea.addCaretListener(new CaretListener() {        //记录行数和列数
+        textArea.addCaretListener(new CaretListener() {        //write line and column
             public void caretUpdate(CaretEvent e) {
                 //sum=0;
                 JTextArea editArea = (JTextArea)e.getSource();
@@ -607,6 +607,8 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                 //scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                 toolState.setVisible(false);
             }
+        }else if(e.getSource()==itemAboutNotepad){
+            JOptionPane.showMessageDialog(this, "Notepad v1.0 Design by Shihao Zhang ID:21012741","introduce of the app ",1);
         }
     }
     /*===================================================================*/
