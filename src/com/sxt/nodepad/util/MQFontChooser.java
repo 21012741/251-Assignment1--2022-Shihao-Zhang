@@ -130,7 +130,7 @@ public class MQFontChooser extends JDialog {
         styleText.setEditable(false);
         styleText.setBackground(Color.WHITE);
         sizeText = new JTextField("12");
-        // 给文字大小文本框使用的Document文档，制定了一些输入字符的规则
+        // For the Document document used by the text size text box, some rules for inputting characters are formulated
         Document doc = new PlainDocument(){
             public void insertString(int offs, String str, AttributeSet a)
                     throws BadLocationException {
@@ -152,9 +152,9 @@ public class MQFontChooser extends JDialog {
         previewText.setHorizontalAlignment(JTextField.CENTER);
         previewText.setEditable(false);
         previewText.setBackground(Color.WHITE);
-        chinaButton = new JRadioButton("中文预览", true);
-        englishButton = new JRadioButton("英文预览");
-        numberButton = new JRadioButton("数字预览");
+        chinaButton = new JRadioButton("Chinese preview", true);
+        englishButton = new JRadioButton("English preview");
+        numberButton = new JRadioButton("Num preview");
         ButtonGroup bg = new ButtonGroup();
         bg.add(chinaButton);
         bg.add(englishButton);
@@ -162,12 +162,12 @@ public class MQFontChooser extends JDialog {
         fontList = new JList(fontArray);
         styleList = new JList(styleArray);
         sizeList = new JList(sizeArray);
-        approveButton = new JButton("确定");
-        cancelButton = new JButton("取消");
+        approveButton = new JButton("confirm");
+        cancelButton = new JButton("cancel");
         Box box1 = Box.createHorizontalBox();
-        JLabel l1 = new JLabel("字体:");
-        JLabel l2 = new JLabel("字形:");
-        JLabel l3 = new JLabel("大小:");
+        JLabel l1 = new JLabel("Font size:");
+        JLabel l2 = new JLabel("Font glyph:");
+        JLabel l3 = new JLabel("Size:");
         l1.setPreferredSize(new Dimension(165, 14));
         l1.setMaximumSize(new Dimension(165, 14));
         l1.setMinimumSize(new Dimension(165, 14));
@@ -216,8 +216,8 @@ public class MQFontChooser extends JDialog {
         Box box4 = Box.createHorizontalBox();
         Box box5 = Box.createVerticalBox();
         JPanel box6 = new JPanel(new BorderLayout());
-        box5.setBorder(BorderFactory.createTitledBorder("字符集"));
-        box6.setBorder(BorderFactory.createTitledBorder("示例"));
+        box5.setBorder(BorderFactory.createTitledBorder("Char"));
+        box6.setBorder(BorderFactory.createTitledBorder("Example"));
         box5.add(chinaButton);
         box5.add(englishButton);
         box5.add(numberButton);
@@ -246,14 +246,14 @@ public class MQFontChooser extends JDialog {
         getContentPane().add(box);
     }
     /**
-     * 按照预设字体显示
+     * Display in default font
      */
     private void setup() {
         String fontName = font.getFamily();
         int fontStyle = font.getStyle();
         int fontSize = font.getSize();
         /*
-         * 如果预设的文字大小在选择列表中，则通过选择该列表中的某项进行设值，否则直接将预设文字大小写入文本框
+         * If the preset text size is in the selection list, set the value by selecting an item in the list, otherwise directly write the preset text size into the text box
          */
         boolean b = false;
         for (int i = 0; i < sizeArray.length; i++) {
@@ -263,22 +263,22 @@ public class MQFontChooser extends JDialog {
             }
         }
         if(b){
-            // 选择文字大小列表中的某项
+            // Select an item from the text size list
             sizeList.setSelectedValue(String.valueOf(fontSize), true);
         }else{
             sizeText.setText(String.valueOf(fontSize));
         }
-        // 选择字体列表中的某项
+        // Select an item in the font list
         fontList.setSelectedValue(fontName, true);
-        // 选择样式列表中的某项
+        // Select an item in the style list
         styleList.setSelectedIndex(fontStyle);
-        // 预览默认显示中文字符
+        // The preview displays Chinese characters by default
         chinaButton.doClick();
-        // 显示预览
+        // show preview
         setPreview();
     }
     /**
-     * 添加所需的事件监听器
+     * Add the required event listeners
      */
     private void addListener() {
         sizeText.addFocusListener(new FocusListener() {
@@ -289,12 +289,12 @@ public class MQFontChooser extends JDialog {
                 sizeText.selectAll();
             }
         });
-        // 字体列表发生选择事件的监听器
+        // Listener for font list selection event
         fontList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     fontText.setText(String.valueOf(fontList.getSelectedValue()));
-                    // 设置预览
+                    // set preview
                     setPreview();
                 }
             }
@@ -303,7 +303,7 @@ public class MQFontChooser extends JDialog {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     styleText.setText(String.valueOf(styleList.getSelectedValue()));
-                    // 设置预览
+                    // set preview
                     setPreview();
                 }
             }
@@ -314,22 +314,22 @@ public class MQFontChooser extends JDialog {
                     if(!sizeText.isFocusOwner()){
                         sizeText.setText(String.valueOf(sizeList.getSelectedValue()));
                     }
-                    // 设置预览
+                    // set preview
                     setPreview();
                 }
             }
         });
-        // 编码监听器
+        // Encoding listener
         EncodeAction ea = new EncodeAction();
         chinaButton.addActionListener(ea);
         englishButton.addActionListener(ea);
         numberButton.addActionListener(ea);
-        // 确定按钮的事件监听
+        // Event listener for OK button
         approveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // 组合字体
+                // Combining fonts
                 font = groupFont();
-                // 设置返回值
+                // Set return num
                 returnValue = APPROVE_OPTION;
                 // 关闭窗口
                 disposeDialog();

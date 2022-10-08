@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static javafx.application.Platform.exit;
+import static javafx.application.Platform.runLater;
 
 
 public class NotepadMainFrame extends JFrame implements ActionListener {
@@ -27,6 +28,8 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     private JTextArea textArea;
     private JMenuItem itemOpen;
     private JMenuItem itemSave;
+
+
 
     //1：new
     //2：A modified
@@ -67,6 +70,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     private JMenu itFormat;
     private JMenu itemCheck;
     private JMenu itemHelp;
+    public static JMenu time;
     private JMenuItem itemSearchForHelp;
     private JMenuItem itemAboutNotepad;
     private JMenuItem itemUndo;
@@ -134,6 +138,10 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
     private JSeparator separator_7;
     private JSeparator separator_8;
     private JMenuItem popM_Redo;
+
+
+
+
 
     /**
      * Create the frame.
@@ -281,11 +289,6 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         itemEdit.add(separator_8);
         itemEdit.add(itemSelectAll);
 
-//        itemTime = new JMenuItem("Date(D)",'D');
-//        itemTime.addActionListener(this);
-//        itemTime.setAccelerator(KeyStroke.getKeyStroke("F5"));
-//        itemEdit.add(itemTime);
-
         itFormat = new JMenu("Format(O)");
         itFormat.setMnemonic('O');
         menuBar.add(itFormat);
@@ -325,9 +328,20 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         itemAboutNotepad = new JMenuItem("About(A)",'A');
         itemAboutNotepad.addActionListener(this);
         itemHelp.add(itemAboutNotepad);
+
+        //
+
+        time = new JMenu();
+        time.addActionListener(new TestIFrame.TimeActionListener());
+        time.setEnabled(false);
+
+        menuBar.add(time);
+        //
+        //
+
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        //设置边框布局
+        //Set border layout
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
@@ -444,10 +458,6 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
         contentPane.add(toolState, BorderLayout.SOUTH);
         toolState.setVisible(false);
         toolState.setFloatable(false);
-        Clock clock=new Clock();
-        clock.start();
-
-
 
 
         final JPopupMenu jp=new JPopupMenu();    //
