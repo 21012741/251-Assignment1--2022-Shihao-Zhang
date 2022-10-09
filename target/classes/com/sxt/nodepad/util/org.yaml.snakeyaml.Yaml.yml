@@ -1,0 +1,16 @@
+hosts:
+  - host: 10.0.100.5
+    user: root
+    password: fasdf
+    cmd: 0
+
+  - host: 10.0.100.6
+    user: root
+    password: fasdf
+    cmd: 0
+
+commands:
+  0:
+    cmd: ps -ef|grep flume
+    reg: flume
+

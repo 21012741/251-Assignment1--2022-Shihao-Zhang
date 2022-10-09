@@ -593,7 +593,12 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
                 textArea.setLineWrap(false);
             }
         }else if(e.getSource()==itemFont){        //font size
-            MQFontChooser fontChooser = new MQFontChooser(textArea.getFont());
+            MQFontChooser fontChooser = null;
+            try {
+                fontChooser = new MQFontChooser(textArea.getFont());
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
             fontChooser.showFontDialog(this);
             Font font = fontChooser.getSelectFont();
             //JTextArea

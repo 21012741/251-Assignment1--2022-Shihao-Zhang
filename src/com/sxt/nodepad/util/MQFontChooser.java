@@ -1,5 +1,7 @@
 package com.sxt.nodepad.util;
 
+import org.yaml.snakeyaml.Yaml;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +11,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -30,7 +37,12 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
+
 public class MQFontChooser extends JDialog {
+/**
+ * read from yaml
+*/
+
     /**
      * Select the return value of the cancel button
      */
@@ -52,7 +64,7 @@ public class MQFontChooser extends JDialog {
      */
     private static final String NUMBER_STRING = "0123456789";
     // The default font, which is the font to be returned in the future
-    private Font font = null;
+    private Font font;
     // Font selector component container
     private Box box = null;
     // font text box
@@ -91,14 +103,21 @@ public class MQFontChooser extends JDialog {
     /**
      * build a font chooser
      */
-    public MQFontChooser() {
-        this(new Font("font song", Font.PLAIN, 12));
-    }
+//    public MQFontChooser() {
+//        this(new Font("font song", Font.PLAIN, 12));
+//    }
     /**
      * build a font
      * @param font style
      */
-    public MQFontChooser(Font font) {
+    public MQFontChooser(Font font) throws FileNotFoundException {
+        Yaml Fontchooseryaml = new Yaml();
+        FileReader yamlreader = new FileReader("org.yaml.snakeyaml.Yaml.yml");
+        BufferedReader yamlbuffer = new BufferedReader(yamlreader);
+        Map<String, Object> map = (Map<String, Object>) Fontchooseryaml.load(yamlbuffer);
+        int FontSize = Integer.parseInt(String.valueOf(map.get("FontSize")));
+
+
         setTitle("Font selector");
         this.font = font;
         // Initialize UI components
