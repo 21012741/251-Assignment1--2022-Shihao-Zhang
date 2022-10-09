@@ -427,7 +427,7 @@ public class NotepadMainFrame extends JFrame implements ActionListener {
 
         toolState = new JToolBar();
         toolState.setSize(textArea.getSize().width, 10);//toolState.setLayout(new FlowLayout(FlowLayout.LEFT));
-        label1 = new JLabel("Current system time:" + hour + ":" + min + ":" + second+" ");
+        label1 = new JLabel("Open time:" + hour + ":" + min + ":" + second+" ");
         toolState.add(label1);
         toolState.addSeparator();
         label2 = new JLabel(" The " + linenum + " line, The " + columnnum+" column  ");
