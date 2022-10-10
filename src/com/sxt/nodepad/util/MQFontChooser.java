@@ -111,12 +111,6 @@ public class MQFontChooser extends JDialog {
      * @param font style
      */
     public MQFontChooser(Font font) throws FileNotFoundException {
-        Yaml Fontchooseryaml = new Yaml();
-        FileReader yamlreader = new FileReader("org.yaml.snakeyaml.Yaml.yml");
-        BufferedReader yamlbuffer = new BufferedReader(yamlreader);
-        Map<String, Object> map = (Map<String, Object>) Fontchooseryaml.load(yamlbuffer);
-        int FontSize = Integer.parseInt(String.valueOf(map.get("FontSize")));
-
 
         setTitle("Font selector");
         this.font = font;
@@ -135,7 +129,16 @@ public class MQFontChooser extends JDialog {
     /**
      * Initialization module
      */
-    private void init(){
+    private void init() throws FileNotFoundException {
+
+
+        Yaml Fontchooseryaml = new Yaml();
+        FileReader yamlreader = new FileReader("org.yaml.snakeyaml.Yaml.yml");
+        BufferedReader yamlbuffer = new BufferedReader(yamlreader);
+        Map<String, Object> map = (Map<String, Object>) Fontchooseryaml.load(yamlbuffer);
+        int fontSize = Integer.parseInt(String.valueOf(map.get("FontSize")));
+
+
         // get system font
         GraphicsEnvironment eq = GraphicsEnvironment.getLocalGraphicsEnvironment();
         fontArray = eq.getAvailableFontFamilyNames();

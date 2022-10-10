@@ -1,5 +1,9 @@
 # Assignment1
 
+Author: Shihao Zhang(group myself)
+
+Massey ID: 21012741
+
 ## These are introduce of my Text editor(Functions that can be implemented)
 
 1. As you can see, The mainframe has 5 menu_bar named **File Edit Format View and Help**  which imitate the notepad.  
@@ -8,7 +12,7 @@
 
     You can **New** a file .
 
-   You can **Open** a file in your computer.
+   You can **Open** a file in your computer.(can read .odt)
 
    You can **Save** your changes in your computer or **Save as** some others format also.
 
@@ -46,4 +50,10 @@
 
 3. Line dynamic show at the same time as your editor.
 
-4. Some other function I haven't mention, The procedure is for reference only, please correct the deficiency, I will change it.
+4. Using Yaml.
+
+5. Maven dependencies changed and uploaded.
+
+6. CI test using the "Action" in github.
+
+7.  Some other function I haven't mention, The procedure is for reference only, please correct the deficiency, I will change it.
